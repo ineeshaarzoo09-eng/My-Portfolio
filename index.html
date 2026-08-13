@@ -1,1133 +1,1370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ineesha Arzoo | Flutter Developer</title>
-
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    :root {
-      --primary: #00bfff;
-      --primary-glow: rgba(0, 191, 255, 0.4);
-      --dark: #030712;
-      --card: #0b1524;
-      --text: #f3f4f6;
-      --gray: #9ca3af;
-    }
-
-    body {
-      background: var(--dark);
-      color: var(--text);
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* PREMIUM GLOWING BACKGROUND WITH TECH LINES */
-    .bg-grid-lighting {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    /* Soft Blue Gradient Ambient Light */
-    .bg-glow-1 {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(0, 191, 255, 0.08) 0%, transparent 70%);
-      top: -10%;
-      right: -10%;
-    }
-
-    .bg-glow-2 {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
-      bottom: 10%;
-      left: -10%;
-    }
-
-    /* Abstract Cyber Lines (Inspired by the blueprint/nodes look) */
-    .tech-line {
-      position: absolute;
-      background: linear-gradient(90deg, rgba(0, 191, 255, 0.05), transparent);
-      height: 1px;
-      width: 100%;
-    }
-    .line-1 { top: 25%; transform: rotate(-15deg); transform-origin: left; }
-    .line-2 { bottom: 35%; transform: rotate(10deg); transform-origin: right; }
-
-    /* Custom Cursor Track */
-    .custom-cursor {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--primary);
-      border-radius: 50%;
-      position: fixed;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 9999;
-      transition: width 0.2s, height 0.2s, background-color 0.2s;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #060b13;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--primary), #06b6d4);
-      border-radius: 10px;
-    }
-
-    /* NAVBAR */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(3, 7, 18, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: var(--primary);
-      text-shadow: 0 0 15px var(--primary-glow);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 35px;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: var(--gray);
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-weight: 500;
-      font-size: 15px;
-      position: relative;
-    }
-
-    nav ul li a:hover {
-      color: var(--text);
-    }
-
-    nav ul li a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      left: 0;
-      bottom: -6px;
-      background: var(--primary);
-      box-shadow: 0 0 8px var(--primary);
-      transition: 0.3s ease;
-    }
-
-    nav ul li a:hover::after {
-      width: 100%;
-    }
-
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 1100;
-    }
-
-    .menu-toggle span {
-      width: 25px;
-      height: 2px;
-      background: var(--text);
-      transition: 0.3s ease;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 150px 8% 100px;
-      gap: 50px;
-      position: relative;
-    }
-
-    .hero-text {
-      flex: 1.2;
-    }
-
-    .hero-text h3 {
-      color: var(--primary);
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 15px;
-    }
-
-    .hero-text h1 {
-      font-size: 64px;
-      line-height: 74px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 12px;
-      letter-spacing: -2px;
-    }
-
-    .hero-text span.role {
-      display: inline-block;
-      font-size: 15px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      color: #7dd3fc;
-      margin-bottom: 25px;
-      position: relative;
-      padding-bottom: 12px;
-    }
-
-    .hero-text span.role::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(to right, #38bdf8, transparent);
-      border-radius: 10px;
-    }
-
-    .hero-text p {
-      color: #9aa8b8;
-      line-height: 30px;
-      font-size: 16px;
-      max-width: 540px;
-      font-weight: 400;
-    }
-
-    .hero-buttons {
-      margin-top: 40px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 15px 36px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 15px;
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, #0284c7 100%);
-      color: white;
-      box-shadow: 0 4px 20px rgba(0, 191, 255, 0.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px var(--primary-glow);
-    }
-
-    .btn-outline {
-      border: 2px solid rgba(0, 191, 255, 0.3);
-      color: white;
-      background: rgba(255, 255, 255, 0.01);
-    }
-
-    .btn-outline:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: var(--dark);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px var(--primary-glow);
-    }
-
-    /* HIGH-TECH MINIMALISTIC HERO IMAGE FRAME */
-    .hero-image {
-      flex: 0.8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .hero-image-wrapper {
-      position: relative;
-      padding: 15px;
-    }
-
-    .hero-image-frame {
-      width: 330px;
-      height: 330px;
-      border-radius: 50%;
-      overflow: hidden;
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
-      z-index: 2;
-    }
-
-    .hero-image-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Tech Halo Light behind the circle */
-    .hero-image-wrapper::before {
-      content: "";
-      position: absolute;
-      inset: 0px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(0, 191, 255, 0.4);
-      filter: drop-shadow(0 0 12px var(--primary));
-      animation: rotateRing 12s linear infinite;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Floating Abstract Minimalist Icons (Flutter Theme) */
-    .floating-vector {
-      position: absolute;
-      color: rgba(0, 191, 255, 0.35);
-      font-size: 22px;
-      filter: drop-shadow(0 0 8px rgba(0, 191, 255, 0.2));
-      z-index: 3;
-      animation: vectorFloat 4s ease-in-out infinite;
-    }
-    .v1 { top: 10%; left: -5%; animation-delay: 0s; }
-    .v2 { bottom: 15%; right: -5%; animation-delay: 1.5s; }
-    .v3 { bottom: 5%; left: 15%; font-size: 16px; animation-delay: 0.7s; }
-
-    @keyframes rotateRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes vectorFloat {
-      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
-      50% { transform: translateY(-10px) rotate(8deg); opacity: 0.8; }
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 120px 8%;
-    }
-
-    .section-title {
-      text-align: center;
-      color: #ffffff;
-      font-size: 38px;
-      font-weight: 800;
-      margin-bottom: 70px;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 4px;
-      background: var(--primary);
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 2px;
-    }
-
-    /* ABOUT */
-    .about-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .about-card {
-      background: var(--card);
-      padding: 40px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-
-    .about-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 24px;
-      background: linear-gradient(135deg, rgba(0,191,255,0.05) 0%, transparent 100%);
-      opacity: 0;
-      transition: 0.4s;
-    }
-
-    .about-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(56, 189, 248, 0.2);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .about-card:hover::before {
-      opacity: 1;
-    }
-
-    .about-card h2 {
-      font-size: 22px;
-      margin-bottom: 18px;
-      color: #ffffff;
-      font-weight: 700;
-    }
-
-    .about-card p {
-      color: #9aa8b8;
-      line-height: 28px;
-      font-size: 15px;
-    }
-
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-    }
-
-    .skill-card {
-      background: var(--card);
-      padding: 35px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .skill-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(56, 189, 248, 0.2);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .icon-box {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: rgba(56, 189, 248, 0.06);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 25px;
-      border: 1px solid rgba(56, 189, 248, 0.1);
-    }
-
-    .icon-box i {
-      font-size: 28px;
-      color: #38bdf8;
-    }
-
-    .skill-card h2 {
-      font-size: 20px;
-      margin-bottom: 14px;
-      color: #ffffff;
-      font-weight: 700;
-    }
-
-    .skill-card p {
-      color: #9aa8b8;
-      line-height: 28px;
-      font-size: 15px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 25px;
-    }
-
-    .tags span {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      color: #93c5fd;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .project-card {
-      background: var(--card);
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(56, 189, 248, 0.25);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .project-img-wrapper {
-      width: 100%;
-      height: 220px;
-      overflow: hidden;
-      background: linear-gradient(45deg, #1e293b, #0f172a);
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .project-img-wrapper i {
-      font-size: 50px;
-      color: rgba(255,255,255,0.1);
-      position: absolute;
-    }
-
-    .project-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-      z-index: 2;
-    }
-
-    .project-card:hover img {
-      transform: scale(1.05);
-    }
-
-    .project-content {
-      padding: 28px;
-    }
-
-    .project-content h3 {
-      color: #ffffff;
-      margin-bottom: 12px;
-      font-size: 19px;
-      font-weight: 700;
-    }
-
-    .project-content p {
-      color: #9aa8b8;
-      line-height: 26px;
-      font-size: 14.5px;
-      margin-bottom: 20px;
-    }
-
-    .project-links {
-      margin-top: 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .project-links a {
-      text-decoration: none;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.05);
-      border: 1px solid rgba(56, 189, 248, 0.1);
-      padding: 8px 16px;
-      border-radius: 12px;
-      transition: 0.3s;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .project-links a:hover {
-      background: var(--primary);
-      color: var(--dark);
-      border-color: var(--primary);
-      box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
-    }
-
-    /* SERVICES */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 30px;
-    }
-
-    .service-box {
-      background: var(--card);
-      padding: 45px 30px;
-      border-radius: 24px;
-      text-align: center;
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .service-box:hover {
-      transform: translateY(-10px);
-      border-color: rgba(0, 191, 255, 0.25);
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
-    }
-
-    .service-box i {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 25px;
-      border-radius: 20px;
-      background: rgba(0, 191, 255, 0.05);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #00bfff;
-      font-size: 30px;
-      border: 1px solid rgba(0, 191, 255, 0.1);
-      transition: 0.4s;
-    }
-
-    .service-box:hover i {
-      transform: scale(1.05);
-      background: var(--primary);
-      color: var(--dark);
-      box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
-    }
-
-    .service-box h2 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: #ffffff;
-    }
-
-    .service-box p {
-      color: #9aa8b8;
-      line-height: 28px;
-      font-size: 14.5px;
-    }
-
-    /* CONTACT */
-    .contact {
-      text-align: center;
-      padding: 130px 8%;
-    }
-
-    .contact p {
-      color: #9aa8b8;
-      font-size: 18px;
-      max-width: 600px;
-      margin: auto;
-      line-height: 30px;
-    }
-
-    .socials {
-      margin-top: 50px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
-    }
-
-    .socials a {
-      width: 64px;
-      height: 64px;
-      border-radius: 20px;
-      background: var(--card);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--gray);
-      text-decoration: none;
-      font-size: 24px;
-      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .socials a:hover {
-      transform: translateY(-8px);
-      background: #ffffff;
-      color: var(--dark);
-      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
-    }
-
-    .socials a:nth-child(1):hover { color: #ffffff; background: #24292e; } 
-    .socials a:nth-child(2):hover { color: #ffffff; background: #0077b5; } 
-    .socials a:nth-child(3):hover { color: #ffffff; background: #e1306c; } 
-    .socials a:nth-child(4):hover { color: #ffffff; background: #ea4335; } 
-
-    /* FOOTER */
-    footer {
-      padding: 35px 20px;
-      text-align: center;
-      background: #02050a;
-      color: #6b7280;
-      font-size: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
-      letter-spacing: 0.5px;
-    }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 992px) {
-      .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding-top: 140px;
-        gap: 40px;
-      }
-
-      .hero-text h1 {
-        font-size: 46px;
-        line-height: 56px;
-      }
-
-      .hero-text p {
-        margin: auto;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav ul {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 280px;
-        height: 100vh;
-        background: rgba(11, 21, 36, 0.95);
-        backdrop-filter: blur(20px);
-        flex-direction: column;
-        padding: 100px 40px;
-        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-      }
-
-      nav ul.active {
-        right: 0;
-      }
-
-      .menu-toggle.active span:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-      }
-      .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-      }
-      .menu-toggle.active span:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero-text h1 {
-        font-size: 36px;
-        line-height: 44px;
-      }
-
-      .section-title {
-        font-size: 30px;
-      }
-
-      .hero-image-frame {
-        width: 260px;
-        height: 260px;
-      }
-
-      section {
-        padding: 80px 6%;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <meta
+        name="description"
+        content="Ineesha Arzoo is a Flutter Developer specializing in modern mobile applications, Firebase, REST APIs, responsive UI and scalable app development."
+    >
+
+    <meta
+        name="keywords"
+        content="Ineesha Arzoo, Flutter Developer, Flutter App Developer, Dart Developer, Firebase Developer, Mobile App Developer, Software Engineer"
+    >
+
+    <meta name="author" content="Ineesha Arzoo">
+
+    <meta name="robots" content="index, follow">
+
+    <meta name="theme-color" content="#030712">
+
+    <title>
+        Ineesha Arzoo | Flutter Developer & Mobile App Developer
+    </title>
+
+    <!-- Open Graph -->
+    <meta
+        property="og:title"
+        content="Ineesha Arzoo | Flutter Developer"
+    >
+
+    <meta
+        property="og:description"
+        content="Flutter Developer specializing in modern mobile applications, Firebase, REST APIs and responsive UI."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:image"
+        content="images/image.png"
+    >
+
+    <!-- Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <!-- AOS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
 
 <body>
+    <a class="skip-link" href="#home">Skip to content</a>
 
-  <!-- Tech Geometric Lighting Background Layers -->
-  <div class="bg-grid-lighting">
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
-    <div class="tech-line line-1"></div>
-    <div class="tech-line line-2"></div>
-  </div>
+    <!-- ================================
+         BACKGROUND
+    ================================= -->
 
-  <!-- Custom Cursor -->
-  <div class="custom-cursor" id="cursor"></div>
-
-  <!-- NAVBAR -->
-  <nav>
-    <div class="logo">Ineesha<span>.</span></div>
-
-    <div class="menu-toggle" id="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="background-effects" aria-hidden="true">
+        <div class="bg-glow bg-glow-one"></div>
+        <div class="bg-glow bg-glow-two"></div>
+        <div class="tech-line line-one"></div>
+        <div class="tech-line line-two"></div>
     </div>
 
-    <ul id="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-text" data-aos="fade-right">
-      <h3>Hi, I'm</h3>
-      <h1>Ineesha Arzoo</h1>
-      <span class="role">Flutter Developer</span>
-      <p>
-        I design and develop modern Flutter applications with clean UI,
-        smooth performance, Firebase backend, and real-world functionality.
-      </p>
-      <div class="hero-buttons">
-        <a href="#projects" class="btn btn-primary">Let’s Build Your App</a>
-        <a href="#contact" class="btn btn-outline">Contact</a>
-      </div>
-    </div>
+    <!-- ================================
+         CUSTOM CURSOR
+    ================================= -->
 
-    <div class="hero-image" data-aos="fade-left">
-      <div class="hero-image-wrapper">
-        <!-- Floating abstract tech vectors (Flutter Icons style) -->
-        <i class="fa-brands fa-flutter floating-vector v1"></i>
-        <i class="fa-brands fa-flutter floating-vector v2"></i>
-        <i class="fa-solid fa-code floating-vector v3"></i>
-        
-        <div class="hero-image-frame">
-           <img src="images/image.png" alt="Ineesha Arzoo">
-        </div>
-      </div>
-    </div>
-  </section>
+    <div
+        class="custom-cursor"
+        id="cursor"
+        aria-hidden="true"
+    ></div>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h1 class="section-title" data-aos="zoom-in">About Me</h1>
-    <div class="about-container">
-      <div class="about-card" data-aos="fade-up">
-        <h2>Who I Am</h2>
-        <p>
-          I’m a Flutter Developer focused on building production-ready mobile applications with clean architecture, smooth performance, and modern UI/UX. I enjoy turning ideas into real-world apps using Flutter, Firebase, and REST APIs.
-        </p>
-      </div>
 
-      <div class="about-card" data-aos="fade-up" data-aos-delay="100">
-        <h2>What I Do</h2>
-        <p>
-          I develop cross-platform mobile applications with Firebase backend, payment integration, and AI-powered features. My goal is to turn ideas into fully functional, production-ready apps that solve real problems.
-        </p>
-      </div>
+    <!-- ================================
+         NAVIGATION
+    ================================= -->
 
-      <div class="about-card" data-aos="fade-up" data-aos-delay="200">
-        <h2>My Focus</h2>
-        <p>
-          Clean architecture, responsive UI, and optimized performance. I believe in writing maintainable code and delivering applications that feel modern, fast, and user-friendly.
-        </p>
-      </div>
-    </div>
-  </section>
+    <header class="site-header">
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <h1 class="section-title" data-aos="zoom-in">My Expertise</h1>
-    <div class="skills-grid">
-      <!-- FLUTTER -->
-      <div class="skill-card" data-aos="fade-up">
-        <div class="icon-box">
-          <i class="fa-brands fa-flutter"></i>
-        </div>
-        <h2>Flutter Development</h2>
-        <p>
-          Building high-performance, responsive and scalable cross-platform mobile applications with modern UI/UX.
-        </p>
-        <div class="tags">
-          <span>Flutter</span>
-          <span>Dart</span>
-          <span>Animations</span>
-        </div>
-      </div>
+        <nav class="navbar container">
 
-      <!-- FIREBASE -->
-      <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon-box">
-          <i class="fa-solid fa-database"></i>
-        </div>
-        <h2>Firebase Backend</h2>
-        <p>
-          Authentication, Firestore database, cloud storage, and real-time backend integration.
-        </p>
-        <div class="tags">
-          <span>Firebase</span>
-          <span>Firestore</span>
-          <span>Auth</span>
-        </div>
-      </div>
+            <a
+                href="#home"
+                class="logo"
+                aria-label="Ineesha Arzoo Home"
+            >
+                Ineesha<span>.</span>
+            </a>
 
-      <!-- API -->
-      <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon-box">
-          <i class="fa-solid fa-code"></i>
-        </div>
-        <h2>API Integration & Backend</h2>
-        <p>
-          Integration of REST APIs, payment gateways, and backend services for dynamic applications.
-        </p>
-        <div class="tags">
-          <span>REST API</span>
-          <span>Stripe</span>
-          <span>Backend</span>
-        </div>
-      </div>
-    </div>
-    <p style="text-align:center; color:#9aa8b8; margin-top:50px; font-size: 15px;">
-      Focused on building production-ready mobile applications with clean architecture and modern UI.
-    </p>
-  </section>
+            <button
+                class="menu-toggle"
+                id="mobile-menu"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="nav-links"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <h1 class="section-title" data-aos="zoom-in">Featured Projects</h1>
-    <div class="projects-grid">
-      
-      <div class="project-card" data-aos="fade-up">
-        <div class="project-img-wrapper">
-          <i class="fa-solid fa-laptop-code"></i>
-          <img src="images/local.png" alt="local.png" onerror="this.style.display='none'">
-        </div>
-        <div class="project-content">
-          <h3>AI-Powered Online Platform for Booking Local Services</h3>
-          <p>
-            AI-powered local services booking application with Firebase integration and Stripe payments.
-          </p>
-          <div class="tags">
-            <span>Flutter</span>
-            <span>Firebase</span>
-            <span>AI integration</span>
-            <span>UI/UX</span>
-            <span>GitHub</span>
-          </div>
-          <div class="project-links">
-            <a href="#">Payment Method</a>
-          </div>
-        </div>
-      </div>
+            <ul
+                class="nav-links"
+                id="nav-links"
+            >
+                <li>
+                    <a href="#home" class="active">
+                        Home
+                    </a>
+                </li>
 
-      <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="project-img-wrapper">
-          <i class="fa-solid fa-route"></i>
-          <img src="images/bus.png.png" alt="bus.png" onerror="this.style.display='none'">
-        </div>
-        <div class="project-content">
-          <h3>Smart Bus Pickup And Tracking System</h3>
-          <p>
-            Bus pickup and tracking system with real-time location updates, route management, and user-friendly booking interface.
-          </p>
-          <div class="tags">
-            <span>Flutter</span>
-            <span>Firestore</span>
-            <span>UI/UX</span>
-          </div>
-          <div class="project-links">
-            <a href="#">Google map Integration</a>
-            <a href="#">Role-based Dashboards</a>
-          </div>
-        </div>
-      </div>
+                <li>
+                    <a href="#about">
+                        About
+                    </a>
+                </li>
 
-    </div>
-  </section>
+                <li>
+                    <a href="#skills">
+                        Skills
+                    </a>
+                </li>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <h1 class="section-title" data-aos="zoom-in">My Services</h1>
-    <div class="services-grid">
-      <!-- SERVICE 1 -->
-      <div class="service-box" data-aos="fade-up">
-        <i class="fa-solid fa-mobile-screen-button"></i>
-        <h2>Flutter App Development</h2>
-        <p>Building modern, responsive and high-performance cross-platform mobile applications using Flutter.</p>
-        <div class="tags" style="justify-content: center;">
-          <span>Flutter</span>
-          <span>Dart</span>
-          <span>UI/UX</span>
-        </div>
-      </div>
+                <li>
+                    <a href="#projects">
+                        Projects
+                    </a>
+                </li>
 
-      <!-- SERVICE 2 -->
-      <div class="service-box" data-aos="fade-up" data-aos-delay="100">
-        <i class="fa-solid fa-fire"></i>
-        <h2>Firebase Integration</h2>
-        <p>Complete Firebase solutions including Authentication, Firestore database, and cloud storage integration.</p>
-        <div class="tags" style="justify-content: center;">
-          <span>Firebase</span>
-          <span>Firestore</span>
-          <span>Auth</span>
-        </div>
-      </div>
+                <li>
+                    <a href="#experience">
+                        Experience
+                    </a>
+                </li>
 
-      <!-- SERVICE 3 -->
-      <div class="service-box" data-aos="fade-up" data-aos-delay="200">
-        <i class="fa-solid fa-code"></i>
-        <h2>API Integration</h2>
-        <p>Integration of REST APIs for dynamic and real-time data-driven mobile applications.</p>
-        <div class="tags" style="justify-content: center;">
-          <span>REST API</span>
-          <span>JSON</span>
-          <span>Backend</span>
-        </div>
-      </div>
+                <li>
+                    <a href="#services">
+                        Services
+                    </a>
+                </li>
 
-      <!-- SERVICE 4 -->
-      <div class="service-box" data-aos="fade-up" data-aos-delay="300">
-        <i class="fa-solid fa-credit-card"></i>
-        <h2>Payment Integration</h2>
-        <p>Secure payment gateway integration like Stripe for booking and e-commerce applications.</p>
-        <div class="tags" style="justify-content: center;">
-          <span>Stripe</span>
-          <span>Payments</span>
-          <span>Checkout</span>
-        </div>
-      </div>
+                <li>
+                    <a href="#contact">
+                        Hire Me
+                    </a>
+                </li>
+            </ul>
 
-      <!-- SERVICE 5 -->
-      <div class="service-box" data-aos="fade-up" data-aos-delay="400">
-        <i class="fa-solid fa-pen-ruler"></i>
-        <h2>UI/UX Design to Flutter</h2>
-        <p>Converting Figma or UI designs into pixel-perfect, responsive Flutter applications.</p>
-        <div class="tags" style="justify-content: center;">
-          <span>Figma</span>
-          <span>Responsive</span>
-          <span>Design</span>
-        </div>
-      </div>
-    </div>
-  </section>
+        </nav>
 
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
-    <h1 class="section-title" data-aos="zoom-in">Contact Me</h1>
-    <p>Let's build amazing Flutter applications together.</p>
+    </header>
 
-    <div class="socials" data-aos="fade-up">
-      <a href="https://github.com/ineeshaarzoo09-eng" target="_blank">
-        <i class="fa-brands fa-github"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/ineesha-arzoo-315700340" target="_blank">
-        <i class="fa-brands fa-linkedin"></i>
-      </a>
-      <a href="https://www.instagram.com/ineesha54?igsh=MThoZW8zd28zM3VldA==" target="_blank">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ineeshaarzoo09@gmail.com" target="_blank">
+
+    <main>
+
+        <!-- ================================
+             HERO
+        ================================= -->
+
+        <section
+            class="hero section"
+            id="home"
+        >
+
+            <div class="container hero-container">
+
+                <div
+                    class="hero-content"
+                    data-aos="fade-right"
+                >
+
+                    <span class="hero-eyebrow">
+                        FLUTTER DEVELOPER · FREELANCER · INSTRUCTOR
+                    </span>
+
+                    <h1>
+                        I turn ideas into
+                        <span>beautiful digital products.</span>
+                        
+                    </h1>
+
+                    <p class="hero-description">
+                        I'm Ineesha Arzoo, a Computer Science graduate, Flutter Developer,
+                        freelancer and instructor. I build polished cross-platform
+                        apps, responsive interfaces and practical digital products
+                        with Flutter, Firebase and REST APIs.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a
+                            href="#projects"
+                            class="btn btn-primary"
+                        >
+                            View My Work
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <a
+                            href="#contact"
+                            class="btn btn-outline"
+                        >
+                            Let's Work Together
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-availability" data-aos="fade-up" data-aos-delay="250">
+                        <span class="availability-dot"></span>
+                        <span>Available for freelance projects & 1:1 mentoring</span>
+                    </div>
+
+                    <div class="hero-socials">
+
+                        <a
+                            href="https://github.com/ineeshaarzoo09-eng"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                        >
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/ineesha-arzoo-315700340"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                        >
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+
+                        <a
+                            href="https://www.fiverr.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Fiverr"
+                        >
+                            <i class="fa-solid fa-briefcase"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO IMAGE -->
+
+                <div
+                    class="hero-visual"
+                    data-aos="fade-left"
+                >
+
+                    <div class="hero-image-wrapper">
+
+                        <div
+                            class="floating-icon floating-icon-one"
+                            aria-hidden="true"
+                        >
+                            <i class="fa-brands fa-flutter"></i>
+                        </div>
+
+                        <div
+                            class="floating-icon floating-icon-two"
+                            aria-hidden="true"
+                        >
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+
+                        <div
+                            class="floating-icon floating-icon-three"
+                            aria-hidden="true"
+                        >
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+
+                        <div class="hero-image-frame">
+
+                            <div class="image-editable">
+                                <img
+                                    src="images/image.png"
+                                    alt="Portrait of Ineesha Arzoo, Flutter Developer"
+                                    width="330"
+                                    height="330"
+                                >
+                               
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             ABOUT
+        ================================= -->
+
+        <section
+            class="section"
+            id="about"
+        >
+
+            <div class="container">
+
+                <div
+                    class="section-heading"
+                    data-aos="fade-up"
+                >
+
+                    <span class="section-label">
+                        ABOUT ME
+                    </span>
+
+                    <h2>
+                        Turning ideas into
+                        <span>real applications.</span>
+                    </h2>
+
+                    <p>
+                        I focus on building reliable, modern and
+                        user-friendly digital products.
+                    </p>
+
+                </div>
+
+
+                <div class="about-grid">
+
+                    <article
+                        class="about-card"
+                        data-aos="fade-up"
+                    >
+
+                        <div class="card-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <h3>
+                            Who I Am
+                        </h3>
+
+                        <p>
+                            I'm a Computer Science graduate and
+                            Flutter Developer passionate about building
+                            production-ready mobile applications with
+                            clean UI, scalable architecture and smooth
+                            user experiences.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="about-card"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+
+                        <div class="card-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+
+                        <h3>
+                            What I Do
+                        </h3>
+
+                        <p>
+                            I develop cross-platform applications using
+                            Flutter and Dart, integrate Firebase and
+                            REST APIs, and connect applications with
+                            real-world services and backend systems.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="about-card"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                    >
+
+                        <div class="card-icon">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+
+                        <h3>
+                            My Approach
+                        </h3>
+
+                        <p>
+                            I prioritize clean code, responsive UI,
+                            performance, maintainability and practical
+                            solutions that turn ideas into usable
+                            products.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="mini-stats" aria-label="Portfolio highlights">
+            <div class="container mini-stats-grid">
+                <div class="mini-stat" data-aos="zoom-in">
+                    <strong data-count="3">0</strong><span>+</span>
+                    <small>Core Development Areas</small>
+                </div>
+                <div class="mini-stat" data-aos="zoom-in" data-aos-delay="100">
+                    <strong data-count="6">0</strong><span>+</span>
+                    <small>Services I Offer</small>
+                </div>
+                <div class="mini-stat" data-aos="zoom-in" data-aos-delay="200">
+                    <strong data-count="2">0</strong><span>+</span>
+                    <small>Roles: Developer + Instructor</small>
+                </div>
+                <div class="mini-stat" data-aos="zoom-in" data-aos-delay="300">
+                    <strong>24/7</strong>
+                    <small>Creative Problem Solving</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================
+             SKILLS
+        ================================= -->
+
+        <section
+            class="section section-alt"
+            id="skills"
+        >
+
+            <div class="container">
+
+                <div
+                    class="section-heading"
+                    data-aos="fade-up"
+                >
+
+                    <span class="section-label">
+                        MY EXPERTISE
+                    </span>
+
+                    <h2>
+                        Technologies I
+                        <span>work with.</span>
+                    </h2>
+
+                    <p>
+                        Tools and technologies I use to build
+                        modern applications.
+                    </p>
+
+                </div>
+
+
+                <div class="skills-grid">
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-brands fa-flutter"></i>
+                        </div>
+
+                        <h3>
+                            Flutter Development
+                        </h3>
+
+                        <p>
+                            Cross-platform mobile applications with
+                            responsive layouts, animations and modern
+                            UI/UX.
+                        </p>
+
+                        <div class="tags">
+                            <span>Flutter</span>
+                            <span>Dart</span>
+                            <span>Responsive UI</span>
+                            <span>Animations</span>
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+
+                        <h3>
+                            Firebase
+                        </h3>
+
+                        <p>
+                            Backend services for authentication,
+                            databases, storage and real-time
+                            application features.
+                        </p>
+
+                        <div class="tags">
+                            <span>Firebase Auth</span>
+                            <span>Firestore</span>
+                            <span>Storage</span>
+                            <span>FCM</span>
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-solid fa-plug"></i>
+                        </div>
+
+                        <h3>
+                            APIs & Backend
+                        </h3>
+
+                        <p>
+                            Connecting mobile applications with
+                            external APIs and backend services.
+                        </p>
+
+                        <div class="tags">
+                            <span>REST APIs</span>
+                            <span>JSON</span>
+                            <span>Python</span>
+                            <span>Flask</span>
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                        data-aos-delay="300"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+
+                        <h3>
+                            Maps & Location
+                        </h3>
+
+                        <p>
+                            Location-based application features,
+                            mapping interfaces and real-time
+                            tracking experiences.
+                        </p>
+
+                        <div class="tags">
+                            <span>Google Maps</span>
+                            <span>GPS</span>
+                            <span>Location</span>
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                        data-aos-delay="400"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+
+                        <h3>
+                            Payment Integration
+                        </h3>
+
+                        <p>
+                            Integrating payment services into
+                            applications where required.
+                        </p>
+
+                        <div class="tags">
+                            <span>Stripe</span>
+                            <span>Checkout</span>
+                            <span>Payments</span>
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card"
+                        data-aos="fade-up"
+                        data-aos-delay="500"
+                    >
+
+                        <div class="skill-icon">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+
+                        <h3>
+                            Development Tools
+                        </h3>
+
+                        <p>
+                            Version control and development workflow
+                            for maintaining and delivering projects.
+                        </p>
+
+                        <div class="tags">
+                            <span>Git</span>
+                            <span>GitHub</span>
+                            <span>VS Code</span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             PROJECTS
+        ================================= -->
+
+        <section
+            class="section"
+            id="projects"
+        >
+
+            <div class="container">
+
+                <div
+                    class="section-heading"
+                    data-aos="fade-up"
+                >
+
+                    <span class="section-label">
+                        SELECTED WORK
+                    </span>
+
+                    <h2>
+                        Projects I've
+                        <span>built.</span>
+                    </h2>
+
+                    <p>
+                        A selection of applications and digital
+                        products I've worked on.
+                    </p>
+
+                </div>
+
+
+                <div class="projects-grid">
+
+
+                    <!-- PROJECT 1 -->
+
+                    <article
+                        class="project-card"
+                        data-aos="fade-up"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="images/bus.png.png"
+                                alt="Smart School Bus Pickup and Tracking System"
+                                loading="lazy"
+                            >
+
+                            <div class="project-category">
+                                Flutter · Firebase
+                            </div>
+
+                        </div>
+
+                        <div class="project-content">
+
+                            <h3>
+                                Smart School Bus Pickup
+                                & Tracking System
+                            </h3>
+
+                            <p>
+                                A school transportation platform
+                                designed for real-time bus tracking,
+                                pickup management and role-based
+                                access.
+                            </p>
+
+                            <div class="tags">
+                                <span>Flutter</span>
+                                <span>Firebase</span>
+                                <span>Google Maps</span>
+                                <span>GPS</span>
+                            </div>
+
+                            <div class="project-footer">
+
+                                <span>
+                                    Mobile Application
+                                </span>
+
+                                <a
+                                    href="https://github.com/ineeshaarzoo09-eng"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="View Smart School Bus project"
+                                >
+                                    View Project
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJECT 2-->
+
+                   
+
+  <article
+                        class="project-card"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="images/local.png"
+                                alt="AI-powered local services booking application"
+                                loading="lazy"
+                            >
+
+                            <div class="project-category">
+                                Flutter · AI · Firebase
+                            </div>
+
+                        </div>
+
+                        <div class="project-content">
+
+                            <h3>
+                                AI-Powered Local Services
+                                Platform
+                            </h3>
+
+                            <p>
+                                A service-booking application with
+                                Firebase integration, AI-powered
+                                functionality and payment support.
+                            </p>
+
+                            <div class="tags">
+                                <span>Flutter</span>
+                                <span>Firebase</span>
+                                <span>AI</span>
+                                <span>Payments</span>
+                            </div>
+
+                            <div class="project-footer">
+
+                                <span>
+                                    Mobile Application
+                                </span>
+
+                                <a
+                                    href="https://github.com/ineeshaarzoo09-eng"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="View local services project"
+                                >
+                                    View Project
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+ <article
+                        class="project-card"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+
+                        <div class="project-image">
+
+                            <img
+                                src="images/Wunity.png"
+                                alt="AI-powered local services booking application"
+                                loading="lazy"
+                            >
+
+                            <div class="project-category">
+                                Flutter · Cloud firestore · GPS
+                            </div>
+
+                        </div>
+
+                        <div class="project-content">
+
+                            <h3>
+                                WUNITY
+                            </h3>
+
+                            <p>
+                                WUNITY is a women’s safety and community app offering smart safety tools, trusted connections, emergency alerts, and live support.
+                            </p>
+
+                            <div class="tags">
+                                <span>Flutter</span>
+                                <span>Firebase Authentication</span>
+                                <span>Geolocation / GPS</span>
+                                <span>Firebase Cloud Messaging (FCM)</span>
+                                <span>Multilingual Support</span>
+                                <span>ZEGO Cloud</span>
+                            </div>
+
+                            <div class="project-footer">
+
+                                <span>
+                                    Mobile Application
+                                </span>
+
+                                <a
+                                    href="https://github.com/ineeshaarzoo09-eng"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="View local services project"
+                                >
+                                    View Project
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                    <!-- PROJECT  -->
+
+                   
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             EXPERIENCE & FREELANCE
+        ================================= -->
+
+        <section class="section experience-section" id="experience">
+            <div class="container">
+
+                <div class="section-heading" data-aos="fade-up">
+                    <span class="section-label">EXPERIENCE & FREELANCE</span>
+                    <h2>More than code — <span>I build, teach & deliver.</span></h2>
+                    <p>
+                        A professional mix of app development, client work and
+                        hands-on mentoring.
+                    </p>
+                </div>
+
+                <div class="experience-grid">
+
+                    <article class="experience-card featured-experience" data-aos="fade-up">
+                        <div class="experience-top">
+                            <div class="experience-icon">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <span class="experience-badge">Freelance</span>
+                        </div>
+
+                        <div class="experience-period">Fiverr · Client Projects</div>
+                        <h3>Flutter Developer & Freelance App Builder</h3>
+                        <p>
+                            I work with clients on Flutter UI development, Figma-to-Flutter
+                            conversion, bug fixing, Firebase integration, API integration
+                            and complete mobile application features.
+                        </p>
+
+                        <div class="tags">
+                            <span>Flutter</span>
+                            <span>Figma to Flutter</span>
+                            <span>Bug Fixing</span>
+                            <span>Firebase</span>
+                            <span>REST APIs</span>
+                        </div>
+
+                        <a class="experience-link" href="https://www.fiverr.com/" target="_blank" rel="noopener noreferrer">
+                            View Fiverr Profile <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </article>
+
+                    <article class="experience-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="experience-top">
+                            <div class="experience-icon">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <span class="experience-badge soft">Instructor</span>
+                        </div>
+
+                        <div class="experience-period">1:1 & Practical Mentoring</div>
+                        <h3>Flutter Instructor & Mentor</h3>
+                        <p>
+                            I teach Flutter and Dart through practical projects,
+                            UI building, Firebase integration, debugging and
+                            step-by-step app development guidance.
+                        </p>
+
+                        <div class="mentor-points">
+                            <span><i class="fa-solid fa-check"></i> Flutter & Dart</span>
+                            <span><i class="fa-solid fa-check"></i> Firebase</span>
+                            <span><i class="fa-solid fa-check"></i> UI implementation</span>
+                            <span><i class="fa-solid fa-check"></i> Debugging & project guidance</span>
+                        </div>
+                    </article>
+
+                    <article class="experience-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="experience-top">
+                            <div class="experience-icon">
+                                <i class="fa-solid fa-code-branch"></i>
+                            </div>
+                            <span class="experience-badge soft">Development</span>
+                        </div>
+
+                        <div class="experience-period">Mobile & Backend Integrations</div>
+                        <h3>Production-Focused Development</h3>
+                        <p>
+                            I combine clean UI, scalable app structure, backend
+                            services and real-world integrations to create
+                            applications that are practical and maintainable.
+                        </p>
+
+                        <div class="tags">
+                            <span>Google Maps</span>
+                            <span>GPS</span>
+                            <span>Notifications</span>
+                            <span>Authentication</span>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="design-showcase" data-aos="fade-up">
+                    <div class="showcase-copy">
+                        <span class="section-label">DESIGN SHOWCASE</span>
+                        <h3>Show your best <span>visual work.</span></h3>
+                        <p>
+                            Replace these placeholders with app screenshots,
+                            UI mockups, Figma designs or client work.
+                        </p>
+                    </div>
+
+                    <div class="design-grid">
+                        <div class="design-placeholder">
+                            <i class="fa-solid fa-image"></i>
+                            <strong>App UI Mockup</strong>
+                            <small>Replace image here</small>
+                        </div>
+                        <div class="design-placeholder">
+                            <i class="fa-solid fa-pen-ruler"></i>
+                            <strong>Figma / UI Design</strong>
+                            <small>Replace image here</small>
+                        </div>
+                        <div class="design-placeholder">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            <strong>Mobile Showcase</strong>
+                            <small>Replace image here</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================================
+             SERVICES
+        ================================= -->
+
+        <section
+            class="section section-alt"
+            id="services"
+        >
+
+            <div class="container">
+
+                <div
+                    class="section-heading"
+                    data-aos="fade-up"
+                >
+
+                    <span class="section-label">
+                        SERVICES
+                    </span>
+
+                    <h2>
+                        How I can
+                        <span>help.</span>
+                    </h2>
+
+                    <p>
+                        Development services for startups,
+                        businesses and individual projects.
+                    </p>
+
+                </div>
+
+
+                <div class="services-grid">
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                    >
+
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+
+                        <h3>
+                            Flutter App Development
+                        </h3>
+
+                        <p>
+                            Build modern cross-platform mobile
+                            applications for Android and iOS.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+
+                        <i class="fa-solid fa-fire"></i>
+
+                        <h3>
+                            Firebase Integration
+                        </h3>
+
+                        <p>
+                            Authentication, Firestore, Storage,
+                            notifications and backend integration.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                        data-aos-delay="200"
+                    >
+
+                        <i class="fa-solid fa-code"></i>
+
+                        <h3>
+                            API Integration
+                        </h3>
+
+                        <p>
+                            Connect applications with REST APIs
+                            and third-party backend services.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                        data-aos-delay="300"
+                    >
+
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                        <h3>
+                            Figma to Flutter
+                        </h3>
+
+                        <p>
+                            Convert designs into responsive,
+                            pixel-focused Flutter interfaces.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                        data-aos-delay="400"
+                    >
+
+                        <i class="fa-solid fa-bug-slash"></i>
+
+                        <h3>
+                            Bug Fixing & Optimization
+                        </h3>
+
+                        <p>
+                            Diagnose application issues,
+                            improve performance and fix UI bugs.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="service-card"
+                        data-aos="fade-up"
+                        data-aos-delay="500"
+                    >
+
+                        <i class="fa-solid fa-map-location-dot"></i>
+
+                        <h3>
+                            Maps & Location Features
+                        </h3>
+
+                        <p>
+                            Build location-based features,
+                            tracking systems and map interfaces.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             CTA
+        ================================= -->
+
+        <section class="cta-section">
+
+            <div
+                class="container cta-container"
+                data-aos="zoom-in"
+            >
+
+                <span class="section-label">
+                    HAVE A PROJECT?
+                </span>
+
+                <h2>
+                    Let's turn your idea
+                    into an app.
+                </h2>
+
+                <p>
+                    Whether you need a new Flutter application,
+                    Firebase integration or help fixing an
+                    existing project, let's talk.
+                </p>
+
+                <a
+                    href="#contact"
+                    class="btn btn-primary"
+                >
+                    Start a Conversation
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             CONTACT
+        ================================= -->
+
+        <section
+            class="section contact-section"
+            id="contact"
+        >
+
+            <div
+                class="container contact-container"
+                data-aos="fade-up"
+            >
+
+                <span class="section-label">
+                    Contact
+                </span>
+
+                <h2>
+                    Let's work
+                    <span>together.</span>
+                </h2>
+
+                <p>
+                    Have a project in mind or need help with
+                    your Flutter application? I'd love to hear
+                    about it.
+                </p>
+
+
+                <div class="contact-actions">
+    <a
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=ineeshaarzoo09@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary"
+    >
         <i class="fa-solid fa-envelope"></i>
-      </a>
-    </div>
-  </section>
+        Email Me
+    </a>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 Ineesha Arzoo | Flutter Developer 
-  </footer>
+                <div class="social-links">
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    // Initialize Animations
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
+                    <a
+                        href="https://github.com/ineeshaarzoo09-eng"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                    >
+                        <i class="fa-brands fa-github"></i>
+                    </a>
 
-    // Custom Cursor Logic
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
+                    <a
+                        href="https://www.linkedin.com/in/ineesha-arzoo-315700340"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                    >
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
 
-    // Interactive Hover on Cursor for links
-    document.querySelectorAll('a, .menu-toggle, .about-card, .skill-card, .service-box, .project-card').forEach(link => {
-      link.addEventListener('mouseenter', () => {
-        cursor.style.width = '40px';
-        cursor.style.height = '40px';
-        cursor.style.backgroundColor = 'rgba(0, 191, 255, 0.1)';
-      });
-      link.addEventListener('mouseleave', () => {
-        cursor.style.width = '20px';
-        cursor.style.height = '20px';
-        cursor.style.backgroundColor = 'transparent';
-      });
-    });
+                    <a
+                        href="https://www.instagram.com/ineesha54"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
 
-    // Mobile Navbar Menu Toggle
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.getElementById('nav-links');
+                </div>
 
-    mobileMenu.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
+            </div>
 
-    // Close menu when links are clicked
-    document.querySelectorAll('#nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-  </script>
+        </section>
+
+    </main>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 Ineesha Arzoo.
+                Built with Flutter Developer energy.
+            </p>
+
+            <a href="#home">
+                Back to top
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- AOS -->
+    <script
+        src="https://unpkg.com/aos@2.3.1/dist/aos.js"
+    ></script>
+
+    <!-- Main JS -->
+    <script src="script.js"></script>
+    
+
 </body>
 </html>
